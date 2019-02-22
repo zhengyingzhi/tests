@@ -41,3 +41,45 @@ def query_his_deliver():
         ret = str(err)
     return pickle.dumps({'STATUS': 'OK', 'DATA': ret})
 
+lass StockFare:
+    def __init__(self, code, amount, fare):
+        self.stock_code = code
+        self.amount = amount
+        self.fare = fare
+
+    def __repr__(self):
+        return "{},{},{}".format(self.stock_code, self.amount, round(self.fare, 2))
+
+def calc_fare(his_delivers):
+    buy_fares = {}
+    sell_fares = {}
+    total_fares = 0
+    for hd in his_delivers:
+        fares = hd.fare0 + hd.fare1 + hd.fare2 + hd.fare3 + hd.farex
+        fare_dicts = buy_fares if hd.entrust_bs == '1' else sell_fares
+        if hd.stock_code not in fare_dicts:
+            sf = StockFare(hd.stock_code, 0, 0)
+            fare_dicts[hd.stock_code] = sf
+        else:
+            sf = fare_dicts[hd.stock_code]
+        sf.amount += hd.business_amount
+        sf.fare += fares
+        total_fares += fares
+
+    for code, fare in buy_fares.items():
+        print("buy  {} -->> {}".format(code, fare))
+    for code, fare in sell_fares.items():
+        print("sell {} -->> {}".format(code, fare))
+
+
+if __name__ == "__main__":
+    # app.run(host='0.0.0.0', port=8090, debug=True, threaded=False)
+
+    data = HisDeliver ()
+    data.fund_account = '880000004658'
+    data.entrust_date = 20190221
+
+    his_delivers = PapertradingDB.query_his_deliver(data)
+    print(his_delivers[:5])
+    calc_fare(his_delivers)
+
