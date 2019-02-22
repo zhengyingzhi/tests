@@ -1,0 +1,43 @@
+﻿
+class HisDeliver(Base):
+    __tablename__ = 'his_deliver'
+
+    entrust_date = Column(Integer)
+    stock_code = Column(String)
+    stock_name = Column(String)
+    entrust_bs = Column(String)
+    business_amount = Column(Integer)
+    business_price = Column(Float)
+    business_balance = Column(Float)
+    business_time = Column(Integer)
+    entrust_no = Column(String)
+    fund_account = Column(String)
+    fare0 = Column(Float)
+    fare1 = Column(Float)
+    fare2 = Column(Float)
+    fare3 = Column(Float)
+    farex = Column(Float)
+
+
+
+    @staticmethod
+    def query_his_deliver(data):
+        """查询交割流水"""
+        with SessionWrapper(uri=PAPERTRADING_URI) as sw:
+            his_delivers = sw.query(HisDeliver).filter(HisDeliver.fund_account == data.fund_account,
+                                                        HisDeliver.entrust_date == data.entrust_date).all()
+            his_delivers
+        return his_delivers
+
+
+@app.route("/db_service/query_his_deliver", methods=['POST'])
+def query_his_deliver():
+    print(request)
+    try:
+        data = _check_and_get_request_data(request)
+        ret = PapertradingDB.query_his_deliver(data['DATA'])
+    except Exception as err:
+        log.error("query_his_deliver error:{}, data:{}".format(err, data.get('DATA')))
+        ret = str(err)
+    return pickle.dumps({'STATUS': 'OK', 'DATA': ret})
+
