@@ -83,3 +83,89 @@ if __name__ == "__main__":
     print(his_delivers[:5])
     calc_fare(his_delivers)
 
+
+apertrading=# \d his_deliver
+                   Table "public.his_deliver"
+      Column       |            Type             |   Modifiers
+-------------------+-----------------------------+---------------
+ init_date         | numeric(10,0)               |
+ serial_no         | numeric(10,0)               |
+ curr_time         | numeric(10,0)               |
+ business_flag     | numeric(10,0)               |
+ op_branch_no      | numeric(10,0)               |
+ op_entrust_way    | character varying(1)        |
+ exchange_type     | character varying(4)        |
+ stock_account     | character varying(20)       |
+ stock_code        | character varying(6)        |
+ stock_type        | character varying(4)        |
+ stock_name        | character varying(32)       |
+ store_unit        | numeric(10,0)               |
+ money_type        | character varying(3)        |
+ entrust_bs        | character varying(1)        |
+ seat_no           | character varying(8)        |
+ report_no         | numeric(10,0)               |
+ business_no       | numeric(10,0)               |
+ business_type     | character varying(1)        |
+ business_amount   | numeric(19,2)               |
+ business_price    | numeric(18,3)               |
+ business_balance  | numeric(19,2)               |
+ post_amount       | numeric(19,2)               |
+ report_time       | numeric(10,0)               |
+ business_time     | numeric(10,0)               |
+ business_times    | numeric(10,0)               |
+ clear_balance     | numeric(19,2)               |
+ post_balance      | numeric(19,2)               |
+ stock_interest    | numeric(15,8)               |
+ profit            | numeric(19,2)               |
+ fare0             | numeric(19,2)               |
+ fare1             | numeric(19,2)               |
+ fare2             | numeric(19,2)               |
+ fare3             | numeric(19,2)               |
+ farex             | numeric(19,2)               |
+ standard_fare0    | numeric(19,2)               |
+ exchange_fare     | numeric(19,2)               |
+ fare_remark       | character varying(2000)     |
+ remark            | character varying(2000)     |
+ entrust_date      | numeric(10,0)               |
+ entrust_no        | numeric(10,0)               |
+ square_flag       | character varying(1)        |
+ bank_no           | character varying(4)        |
+ branch_no         | numeric(10,0)               |
+ fund_account      | character varying(18)       |
+ client_id         | character varying(18)       |
+ report_account    | character varying(20)       |
+ date_back         | numeric(10,0)               |
+ real_status       | character varying(1)        |
+ stock_interestx   | numeric(19,2)               |
+ exchange_fare0    | numeric(19,2)               |
+ exchange_fare1    | numeric(19,2)               |
+ exchange_fare2    | numeric(19,2)               |
+ exchange_fare3    | numeric(19,2)               |
+ exchange_fare4    | numeric(19,2)               |
+ exchange_fare5    | numeric(19,2)               |
+ exchange_fare6    | numeric(19,2)               |
+ exchange_farex    | numeric(19,2)               |
+ rebate_balance    | numeric(19,2)               |
+ brokerage         | numeric(19,2)               |
+ position_str      | character varying(100)      |
+ client_group      | numeric(10,0)               |
+ room_code         | numeric(10,0)               |
+ asset_prop        | character varying(1)        |
+ risk_level        | numeric(10,0)               |
+ corp_client_group | numeric(10,0)               |
+ corp_risk_level   | numeric(10,0)               |
+ asset_level       | character varying(1)        |
+ broker_account    | character varying(18)       |
+ client_name       | character varying(60)       |
+ holder_name       | character varying(60)       |
+ limit_flag        | numeric(10,0)               |
+ business_id       | character varying(32)       |
+ order_id          | character varying(10)       |
+ frozen_amount     | numeric(19,2)               |
+ unfrozen_amount   | numeric(19,2)               |
+ correct_amount    | numeric(19,2)               |
+ frozen_balance    | numeric(19,2)               |
+ unfrozen_balance  | numeric(19,2)               |
+ correct_balance   | numeric(19,2)               |
+ upddate_time      | timestamp without time zone | default now()
+
