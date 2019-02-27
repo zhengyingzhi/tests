@@ -1,0 +1,9 @@
+1. 日初初始化持仓时，昨仓记录copy过来：更新run_date，close_profit 置为0，accumulative_profit 保持不变
+2. 向数据库写入持仓时，
+  2.1 若为新的持仓，则将上一次的持仓中的accumulative_profit copy过来，并设置 open_date 为 run_date
+  2.2 若为已有持仓，则正常更新即可，open_date 不更新，close_profit和accumulative在写委托回报记录时更新，即 write_order_to_db 中，若为卖单，查询对应持仓记录，计算该次成交产生的盈亏并更新到持仓记录中
+3. 日终从ods同步持仓时，则将 close_profit,accumulative_profit 置为None，db_service判断为none时，不写入该字段到持仓中
+4. 在根据交易流水时，重新计算当日的close_profit并更新到持仓表，accumulative则重新根据上一次最后持仓记录中的 accumulative累加上该次的close_profit
+5. 页面上展示时，当前盈亏为当天该持仓变动时的盈亏（close_profit+income_balance，后者根据last_price计算而来），累计盈亏，则为 accumulative_profit + income_balance (因为accumulative中已包含了close_profit了)
+6. 盈亏比例，当日盈亏 / 所有股票的当日盈亏总和
+
