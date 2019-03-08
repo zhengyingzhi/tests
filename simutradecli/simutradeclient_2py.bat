@@ -1,0 +1,1 @@
+C:\Python35\Scripts\pyuic5 simutradeclient.ui -o simutradeclient_ui.py 

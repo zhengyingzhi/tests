@@ -1,0 +1,19 @@
+{
+    "cats_receiver": "http://127.0.0.1:6001",
+    "accountType": "S0",
+    "accountID": "701145002",
+    "tradingDay": "2019-02-26",
+
+    "symbol": "000003.SZ",
+    "orderQty": 1000,
+    "orderPrice": 9.8,
+    "filledQty": 200,
+    "filledPrice": 9.8,
+    "orderNo": "80001",
+    "tradeSide": "1",
+    "currentQty": 100,
+    "costPrice": 9.8,
+    "lastPrice": 10,
+    "cash": 900000,
+    "cashAvail": 800000
+}
