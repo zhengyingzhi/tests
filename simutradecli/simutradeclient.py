@@ -9,6 +9,7 @@ import logging
 import json
 import requests
 import sys
+import traceback
 import time
 from datetime import datetime, timedelta
 
@@ -64,10 +65,14 @@ class SimuTradeClientWindow(QMainWindow, Ui_Dialog):
         sys.stdout = StdOutput(self, flag=True)
 
         self.btnPushOrder.clicked.connect(self.slot_push_order)
+        self.btnPushTrade.clicked.connect(self.slot_push_trade)
         self.btnPushPosition.clicked.connect(self.slot_push_position)
 
         self.setting = {}
         self.read_and_init_config()
+
+        self.lastOrderId = 0
+        self.lastEntrtNo = 60000000 + int(datetime.now().strftime("%H%M%S"))
 
     def read_and_init_config(self):
         filename = "simutradeclient.json"
@@ -102,6 +107,7 @@ class SimuTradeClientWindow(QMainWindow, Ui_Dialog):
         set_default_value(self.lineEditFilledQty, "filledQty")
         set_default_value(self.lineEditFilledPrice, "filledPrice")
         set_default_value(self.lineEditOrderNo, "orderNo")
+        set_default_value(self.lineEditOrderNo, "tradeNo")
         set_default_value(self.lineEditSide, "side")
         set_default_value(self.lineEditSide, "tradeSide")
         set_default_value(self.lineEditCorrType, "corrType")
@@ -112,6 +118,15 @@ class SimuTradeClientWindow(QMainWindow, Ui_Dialog):
         set_default_value(self.lineEditLastPrice, "lastPrice")
         set_default_value(self.lineEditCash, "cash")
         set_default_value(self.lineEditCashAvail, "cashAvail")
+
+        orderNoText = self.lineEditOrderNo.text()
+        if not orderNoText:
+            orderNoText = datetime.now().strftime("%m%d") + "0001"
+            self.lineEditOrderNo.setText(orderNoText)
+        tradeNoText = self.lineEditTradeNo.text()
+        if not tradeNoText:
+            tradeNoText = datetime.now().strftime("%d") + "0001"
+            self.lineEditTradeNo.setText(tradeNoText)
 
     def slot_push_order(self):
         """推送订单数据"""
@@ -164,6 +179,76 @@ class SimuTradeClientWindow(QMainWindow, Ui_Dialog):
             msg = "%s%s %d@%.2f 成交%d@%.2f 委托号%s" % (side_desc, symbol, orderQty, orderPrice, filledQty, avgPrice, orderNo)
         else:
             msg = "%s%s %d@%.2f 委托号%s" % (side_desc, symbol, orderQty, orderPrice, orderNo)
+        self.ui_log(msg)
+
+    def slot_push_trade(self):
+        """推送成交"""
+        accttype = self.lineEditAccountType.text()
+        account = self.lineEditAccountID.text()
+        if not accttype or not account:
+            self.ui_log("push_trade invalid account data!")
+            return
+
+        try:
+            symbol = self.lineEditSymbol.text()
+            scrCode = symbol[:6]
+            mktCode = "1" if (symbol[0] == '6' or symbol[0] == '2') else "2"
+            orderId = self.lineEditOrderId.text()       # not entru_no
+            txnDate = int(self.lineEditTradingDay.text().replace('-', '')) # int(datetime.now().strftime("%Y%m%d"))
+            txnDrc = self.lineEditSide.text()
+            entrtNo = int(self.lineEditOrderNo.text())
+            dealNo = int(self.lineEditTradeNo.text())
+            entrtProp = "0"
+            entrtQty = int(self.lineEditOrderQty.text())
+            dealQty = int(self.lineEditFilledQty.text())
+            dealPrc = float(self.lineEditFilledPrice.text())
+            dealAmt = dealQty * dealPrc
+        except Exception as err:
+            self.ui_log("push_deal invalid data, err:%s!" % (err))
+            self.ui_log("%s!" % (traceback.format_exc()))
+            return
+
+        if not orderId:
+            self.ui_log("push_deal no orderId inputed!")
+            return
+
+        if not entrtNo:
+            if int(orderId) != self.lastOrderId:
+                entrtNo = 60000000 + int(datetime.now().strftime("%H%M%S"))
+                self.lastEntrtNo = entrtNo
+                self.lineEditOrderId.setText(str(entrtNo))
+            else:
+                entrtNo = self.lastEntrtNo
+        self.lastOrderId = int(orderId)
+
+        data = {
+            'acctType': accttype,
+            'acctNo': account,
+            'orderId': int(orderId),
+            'txnDate': txnDate,
+            'txnDrc': txnDrc,
+            'mktCode': mktCode,
+            'scrCode': scrCode,
+            'entrtNo': int(entrtNo),
+            'dealNo': int(dealNo),
+            'entrtProp': entrtProp,
+            'entrtQty': entrtQty,
+            'dealQty': dealQty,
+            'dealPrc': dealPrc,
+            'dealAmt': dealAmt,
+        }
+        deal_data = {'deal_data': data}
+
+        url = self.lineEditUrl.text()
+        try:
+            post_data(url, "/deal", deal_data)
+        except Exception as err:
+            self.ui_log("push_deal exception:%s!" % (err))
+            return
+
+        # 输入日志
+        side_desc = "买" if txnDrc == '1' else "卖"
+        msg = "%s%s %d 成交%d@%.2f 成交号%s 委托号%s" % (side_desc, symbol, entrtQty, dealQty, dealPrc, dealNo, orderId)
         self.ui_log(msg)
 
     def slot_push_position(self):

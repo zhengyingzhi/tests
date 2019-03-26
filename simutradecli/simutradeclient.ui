@@ -160,6 +160,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>交易柜台的委托号EntruNo</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_7">
    <property name="geometry">
@@ -226,7 +229,7 @@
      <x>530</x>
      <y>68</y>
      <width>81</width>
-     <height>51</height>
+     <height>40</height>
     </rect>
    </property>
    <property name="text">
@@ -407,7 +410,8 @@
     </rect>
    </property>
    <property name="text">
-    <string>推送持仓</string>
+    <string>推送持仓
+(deprecated)</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEditCashAvail">
@@ -487,6 +491,71 @@
    </property>
    <property name="text">
     <string>买卖方向</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnPushTrade">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>130</y>
+     <width>81</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>推送成交</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditTradeNo">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>148</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_19">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>153</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>成交编号</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditOrderId">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>150</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>新报单接口返回的订单号，类似于CATS算法单返回的算法单号</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_20">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>154</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>新报单接口返回的订单号，类似于CATS算法单返回的算法单号</string>
+   </property>
+   <property name="text">
+    <string>订单号(新)</string>
    </property>
   </widget>
  </widget>
