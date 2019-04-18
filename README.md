@@ -51,7 +51,7 @@ def add(x, y):
 send_comp_id|string|发送端标识
 live_id|string|"12312"
 
-![图片](https://github.com/zhengyingzhi/tests/tree/master/pics/python_types.png)
+![图片](https://github.com/zhengyingzhi/tests/blob/master/pics/python_types.png)
 
 ##### h5
 
