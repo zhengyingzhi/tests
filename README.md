@@ -7,7 +7,9 @@ some temp edits
 some lines 2
 
 > 这段文字高亮
+
 > 这段文字高亮
+
 这行文字不高亮
 
 [点击跳转至百度](http://www.baidu.com)
@@ -21,20 +23,26 @@ some lines 2
 3. H股
 
 *    段落一
+
     这是一小段
+    
     > 区块标记一
 *    段落二
+
     这是二小段
+    
     > 区块标记二
     
 ***
 new line
 - - -
 *这是斜体*
+
 **这是加粗**
 
 `
 def add(x, y):
+
     return x + y
 `
 
@@ -42,3 +50,8 @@ def add(x, y):
 :---:|:---:|:---:
 send_comp_id|string|发送端标识
 live_id|string|"12312"
+
+![图片](https://github.com/zhengyingzhi/tests/pic/python_types.png)
+
+##### h5
+
